@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Feliz Aniversário, Kalila!</title>
+    <!-- Tailwind CSS para estilização rápida e responsiva -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts para as fontes cursivas e de colagem -->
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Indie+Flower&family=Montserrat:wght@400;600;700&display=swap" rel="stylesheet">
+    <!-- Canvas Confetti para a animação das velas -->
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+
+    <style>
+        body {
+            /* Fundo vermelho escuro texturizado inspirado na segunda imagem */
+            background-color: #7b0d0d;
+            background-image: 
+                radial-gradient(#5a0808 15%, transparent 16%),
+                radial-gradient(#5a0808 15%, transparent 16%);
+            background-size: 4px 4px;
+            background-position: 0 0, 2px 2px;
+            font-family: 'Montserrat', sans-serif;
+            color: white;
+            overflow-x: hidden;
+        }
+
+        .font-title {
+            font-family: 'Dancing Script', cursive;
+        }
+
+        .font-handwritten {
+            font-family: 'Indie Flower', cursive;
+        }
+
+        /* Efeito de papel rasgado/polaroid para as fotos */
+        .photo-frame {
+            background-color: #f8f8f8;
+            padding: 12px 12px 40px 12px;
+            box-shadow: 2px 4px 15px rgba(0,0,0,0.5);
+            position: relative;
+            border-radius: 2px;
+        }
+
+        /* Fita crepe (Masking Tape) */
+        .tape {
+            position: absolute;
+            background-color: rgba(255, 255, 255, 0.5);
+            box-shadow: 0 1px 3px rgba(0,0,0,0.2);
+            backdrop-filter: blur(2px);
+            width: 100px;
+            height: 30px;
+            top: -15px;
+            left: 50%;
+            transform: translateX(-50%) rotate(-3deg);
+            z-index: 10;
+            border-radius: 2px;
+        }
+
+        .tape-2 {
+            transform: translateX(-50%) rotate(4deg);
+        }
+
+        /* Animação da chama das velas */
+        @keyframes flicker {
+            0%, 100% { transform: scale(1) rotate(-2deg); }
+            50% { transform: scale(1.1) rotate(2deg); }
+        }
+
+        .flame {
+            transform-origin: 6px 0px;
+            animation: flicker 0.6s infinite alternate;
+            transition: opacity 0.5s ease-out, transform 0.5s ease-out;
+        }
+
+        .flame.out {
+            opacity: 0;
+            animation: none;
+            transform: translateY(-10px) scale(0);
+        }
+
+        /* Efeito de fumaça ao apagar */
+        .smoke {
+            opacity: 0;
+            transition: opacity 1s ease-in;
+        }
+        
+        .flame.out ~ .smoke {
+            opacity: 0.6;
+            animation: rise 2s forwards;
+        }
+
+        @keyframes rise {
+            0% { transform: translateY(0) scale(1); opacity: 0.6; }
+            100% { transform: translateY(-30px) scale(2); opacity: 0; }
+        }
+
+        /* Botão estilizado */
+        .btn-apagar {
+            background: linear-gradient(135deg, #ff7e5f, #feb47b);
+            transition: all 0.3s ease;
+        }
+        .btn-apagar:hover {
+            transform: scale(1.05);
+            box-shadow: 0 5px 15px rgba(255, 126, 95, 0.4);
+        }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col items-center py-10 px-4 md:px-10">
+
+    <!-- Cabeçalho -->
+    <header class="text-center mb-12">
+        <h1 class="font-title text-6xl md:text-8xl text-white drop-shadow-lg mb-2">Feliz Aniversário</h1>
+        <h2 class="font-title text-5xl md:text-7xl text-[#feb47b] drop-shadow-md">Kalila!</h2>
+    </header>
+
+    <!-- Seção de Colagem de Fotos -->
+    <section class="max-w-6xl w-full grid grid-cols-1 md:grid-cols-2 lg:grid-cols-6 gap-10 mb-16">
+        
+        <!-- Foto 1 -->
+        <div class="flex justify-center items-center lg:col-span-2">
+            <div class="photo-frame transform -rotate-2 w-full max-w-sm">
+                <div class="tape tape-2"></div>
+                <img src="FOTO1.jpg" alt="Kalila" class="w-full h-auto max-h-[450px] object-contain bg-white border border-gray-200">
+                <p class="font-handwritten text-gray-800 text-xl text-center mt-4 font-bold">Amoras ❤️</p>
+            </div>
+        </div>
+
+        <!-- Foto 2 -->
+        <div class="flex justify-center items-center lg:col-span-2">
+            <div class="photo-frame transform rotate-3 w-full max-w-sm">
+                <div class="tape"></div>
+                <img src="FOTO2.jpg" alt="Kalila na praia" class="w-full h-auto max-h-[450px] object-contain bg-white border border-gray-200">
+                <p class="font-handwritten text-gray-800 text-lg text-center mt-3">Amoras ❤️</p>
+            </div>
+        </div>
+
+        <!-- Foto 3 -->
+        <div class="flex justify-center items-center lg:col-span-2">
+            <div class="photo-frame transform -rotate-3 w-full max-w-sm">
+                <div class="tape tape-2" style="width: 80px;"></div>
+                <img src="FOTO3.jpg" alt="Kalila no restaurante" class="w-full h-auto max-h-[450px] object-contain bg-white border border-gray-200">
+                <p class="font-handwritten text-gray-800 text-lg text-center mt-3">Amoras ❤️</p>
+            </div>
+        </div>
+
+        <!-- Foto 4 -->
+        <div class="flex justify-center items-center lg:col-start-2 lg:col-span-2">
+            <div class="photo-frame transform rotate-2 w-full max-w-sm">
+                <div class="tape"></div>
+                <img src="FOTO4.jpg" alt="Kalila com máscara facial" class="w-full h-auto max-h-[450px] object-contain bg-white border border-gray-200">
+                <p class="font-handwritten text-gray-800 text-xl text-center mt-4 font-bold">Amoras ❤️</p>
+            </div>
+        </div>
+
+        <!-- Foto 5 -->
+        <div class="flex justify-center items-center md:col-span-2 lg:col-span-2 lg:col-start-4">
+            <div class="photo-frame transform -rotate-1 w-full max-w-sm">
+                <div class="tape tape-2"></div>
+                <img src="FOTO5.jpg" alt="Kalila escovando os dentes" class="w-full h-auto max-h-[450px] object-contain bg-white border border-gray-200">
+                <p class="font-handwritten text-gray-800 text-lg text-center mt-3">Amoras ❤️</p>
+            </div>
+        </div>
+
+    </section>
+
+    <!-- Mensagem -->
+    <section class="text-center max-w-2xl mx-auto mb-16 px-4">
+        <p class="font-handwritten text-2xl md:text-4xl text-white leading-relaxed drop-shadow-md">
+            Que a vida te surpreenda com infinitas bênçãos e motivos para sorrir todos os dias. Meu amor é a razão pela qual meus dias são tão cheios de cores!
+        </p>
+    </section>
+
+    <!-- Seção do Bolo e Velas -->
+    <section class="flex flex-col items-center w-full bg-white/5 p-8 rounded-3xl backdrop-blur-sm border border-white/10 shadow-2xl">
+        <h3 class="font-title text-4xl mb-6 text-white text-center">Hora dos parabéns!</h3>
+        
+        <!-- SVG do Bolo com Velas -->
+        <div class="relative w-64 h-64 mb-6">
+            <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg" class="w-full h-full overflow-visible">
+                <!-- Prato -->
+                <ellipse cx="100" cy="180" rx="90" ry="15" fill="#4a0505" />
+                <ellipse cx="100" cy="177" rx="85" ry="12" fill="#8c1b1b" />
+
+                <!-- Base do Bolo -->
+                <rect x="30" y="110" width="140" height="60" rx="5" fill="#fde68a" />
+                
+                <!-- Decoração Bolo (Ondas) -->
+                <path d="M 30 140 Q 47.5 155 65 140 T 100 140 T 135 140 T 170 140" fill="none" stroke="#f59e0b" stroke-width="6" stroke-linecap="round"/>
+                <path d="M 30 160 Q 47.5 175 65 160 T 100 160 T 135 160 T 170 160" fill="none" stroke="#f59e0b" stroke-width="6" stroke-linecap="round"/>
+
+                <!-- Cobertura do Bolo -->
+                <path d="M 25 115 C 25 100, 175 100, 175 115 C 175 125, 160 135, 150 120 C 140 135, 120 135, 110 120 C 100 135, 80 135, 70 120 C 60 135, 40 135, 25 115 Z" fill="#ffffff" />
+                
+                <!-- Granulados (Confetti no bolo) -->
+                <rect x="50" y="105" width="4" height="12" rx="2" fill="#ef4444" transform="rotate(45 52 111)" />
+                <rect x="80" y="110" width="4" height="12" rx="2" fill="#3b82f6" transform="rotate(-30 82 116)" />
+                <rect x="110" y="102" width="4" height="12" rx="2" fill="#10b981" transform="rotate(15 112 108)" />
+                <rect x="140" y="112" width="4" height="12" rx="2" fill="#8b5cf6" transform="rotate(-60 142 118)" />
+
+                <!-- Vela 1 (Esquerda) -->
+                <g transform="translate(50, 60)">
+                    <rect x="0" y="10" width="12" height="40" fill="#ef4444" rx="2" />
+                    <line x1="6" y1="10" x2="6" y2="0" stroke="#333" stroke-width="2" />
+                    <path class="flame" d="M 6 -20 C 12 -10, 10 -5, 6 0 C 2 -5, 0 -10, 6 -20 Z" fill="#fbbf24" />
+                    <path class="flame" d="M 6 -14 C 9 -7, 8 -3, 6 -1 C 4 -3, 3 -7, 6 -14 Z" fill="#ea580c" />
+                    <circle class="smoke" cx="6" cy="-10" r="4" fill="#cbd5e1" />
+                </g>
+
+                <!-- Vela 2 (Centro) -->
+                <g transform="translate(94, 50)">
+                    <rect x="0" y="10" width="12" height="50" fill="#3b82f6" rx="2" />
+                    <line x1="6" y1="10" x2="6" y2="0" stroke="#333" stroke-width="2" />
+                    <path class="flame" d="M 6 -20 C 12 -10, 10 -5, 6 0 C 2 -5, 0 -10, 6 -20 Z" fill="#fbbf24" />
+                    <path class="flame" d="M 6 -14 C 9 -7, 8 -3, 6 -1 C 4 -3, 3 -7, 6 -14 Z" fill="#ea580c" />
+                    <circle class="smoke" cx="6" cy="-10" r="4" fill="#cbd5e1" />
+                </g>
+
+                <!-- Vela 3 (Direita) -->
+                <g transform="translate(138, 60)">
+                    <rect x="0" y="10" width="12" height="40" fill="#10b981" rx="2" />
+                    <line x1="6" y1="10" x2="6" y2="0" stroke="#333" stroke-width="2" />
+                    <path class="flame" d="M 6 -20 C 12 -10, 10 -5, 6 0 C 2 -5, 0 -10, 6 -20 Z" fill="#fbbf24" />
+                    <path class="flame" d="M 6 -14 C 9 -7, 8 -3, 6 -1 C 4 -3, 3 -7, 6 -14 Z" fill="#ea580c" />
+                    <circle class="smoke" cx="6" cy="-10" r="4" fill="#cbd5e1" />
+                </g>
+            </svg>
+        </div>
+
+        <button id="btn-velas" onclick="apagarVelas()" class="btn-apagar text-white font-bold py-3 px-8 rounded-full text-xl shadow-lg flex items-center gap-2">
+            🌬️ Apague as velas e faça um pedido
+        </button>
+        
+        <p id="mensagem-surpresa" class="hidden font-handwritten text-3xl text-[#feb47b] mt-6 text-center drop-shadow-md">
+            Que seu desejo se realize, eu te amo muito! Meu amor!! ❤️
+        </p>
+    </section>
+
+    <!-- Rodapé -->
+    <footer class="mt-16 text-center opacity-70 text-sm">
+        <p>Feito com muito amor para você.</p>
+    </footer>
+
+    <script>
+        function apagarVelas() {
+            // Seleciona todas as chamas e adiciona a classe que as esconde
+            const flames = document.querySelectorAll('.flame');
+            flames.forEach(flame => {
+                flame.classList.add('out');
+            });
+
+            // Altera o botão
+            const btn = document.getElementById('btn-velas');
+            btn.innerHTML = "🎂 Velas Apagadas!";
+            btn.classList.remove('btn-apagar');
+            btn.classList.add('bg-gray-500', 'cursor-not-allowed', 'opacity-80');
+            btn.disabled = true;
+
+            // Mostra a mensagem secreta
+            const msg = document.getElementById('mensagem-surpresa');
+            msg.classList.remove('hidden');
+            msg.classList.add('animate-pulse');
+
+            // Dispara a animação de confetes maravilhosa
+            var duration = 3 * 1000;
+            var animationEnd = Date.now() + duration;
+            var defaults = { startVelocity: 30, spread: 360, ticks: 60, zIndex: 0 };
+
+            function randomInRange(min, max) {
+                return Math.random() * (max - min) + min;
+            }
+
+            var interval = setInterval(function() {
+                var timeLeft = animationEnd - Date.now();
+
+                if (timeLeft <= 0) {
+                    return clearInterval(interval);
+                }
+
+                var particleCount = 50 * (timeLeft / duration);
+                
+                // Dispara dos dois lados da tela
+                confetti(Object.assign({}, defaults, { particleCount, origin: { x: randomInRange(0.1, 0.3), y: Math.random() - 0.2 } }));
+                confetti(Object.assign({}, defaults, { particleCount, origin: { x: randomInRange(0.7, 0.9), y: Math.random() - 0.2 } }));
+            }, 250);
+        }
+    </script>
+</body>
+</html>
