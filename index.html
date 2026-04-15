@@ -278,6 +278,14 @@
     </footer>
 
     <script>
+        // Desabilitar scroll restoration e forçar topo ao carregar
+        if ('scrollRestoration' in history) {
+            history.scrollRestoration = 'manual';
+        }
+        window.addEventListener('load', function() {
+            window.scrollTo(0, 0);
+        });
+
         function iniciarSite() {
             const overlay = document.getElementById('overlay');
             const audio = document.getElementById('musicaAniversario');
