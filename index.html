@@ -281,10 +281,22 @@
         function iniciarSite() {
             const overlay = document.getElementById('overlay');
             const audio = document.getElementById('musicaAniversario');
-            audio.play().catch(() => {
-                // Se o navegador bloquear autoplay, continua mesmo assim.
-            });
             overlay.classList.add('hidden');
+            
+            // Tentar tocar a música
+            audio.play().then(() => {
+                console.log('Música tocando');
+            }).catch(() => {
+                // Se autoplay falhar, mostrar botão de play
+                const playBtn = document.createElement('button');
+                playBtn.innerHTML = '🎵 Tocar Música';
+                playBtn.className = 'btn-start text-white font-bold py-3 px-6 rounded-full text-lg shadow-lg fixed top-4 right-4 z-50';
+                playBtn.onclick = () => {
+                    audio.play();
+                    playBtn.remove();
+                };
+                document.body.appendChild(playBtn);
+            });
         }
 
         function apagarVelas() {
